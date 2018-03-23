@@ -20,7 +20,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	add_definitions(/Za)
 endif()
 
-if(("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") OR (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel") AND UNIX))
+if(("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang") OR ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") OR (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel") AND UNIX))
 	set(CMAKE_CXX_FLAGS "-std=c++0x")
 	add_definitions(-Wall)
 endif()
