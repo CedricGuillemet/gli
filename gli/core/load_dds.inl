@@ -77,7 +77,7 @@ namespace detail
 		D3D10_RESOURCE_DIMENSION_BUFFER      = 1,
 		D3D10_RESOURCE_DIMENSION_TEXTURE1D   = 2,
 		D3D10_RESOURCE_DIMENSION_TEXTURE2D   = 3,
-		D3D10_RESOURCE_DIMENSION_TEXTURE3D   = 4 
+		D3D10_RESOURCE_DIMENSION_TEXTURE3D   = 4
 	};
 
 	enum d3d10_resource_misc_flag
@@ -119,7 +119,7 @@ namespace detail
 
 	inline target get_target(dds_header const& Header, dds_header10 const& Header10)
 	{
-		if(Header.CubemapFlags & detail::DDSCAPS2_CUBEMAP)
+		if((Header.CubemapFlags & detail::DDSCAPS2_CUBEMAP) || (Header10.MiscFlag & detail::D3D10_RESOURCE_MISC_TEXTURECUBE))
 		{
 			if(Header10.ArraySize > 1)
 				return TARGET_CUBE_ARRAY;
@@ -280,6 +280,8 @@ namespace detail
 		size_t FaceCount = 1;
 		if(Header.CubemapFlags & detail::DDSCAPS2_CUBEMAP)
 			FaceCount = int(glm::bitCount(Header.CubemapFlags & detail::DDSCAPS2_CUBEMAP_ALLFACES));
+		else if(Header10.MiscFlag & detail::D3D10_RESOURCE_MISC_TEXTURECUBE)
+			FaceCount = 6;
 
 		size_t DepthCount = 1;
 		if(Header.CubemapFlags & detail::DDSCAPS2_VOLUME)
