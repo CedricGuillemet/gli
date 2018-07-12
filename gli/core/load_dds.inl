@@ -182,8 +182,8 @@ namespace detail
 
 		dx DX;
 
-		gli::format Format(static_cast<gli::format>(gli::FORMAT_INVALID));
-		if((Header.Format.flags & (dx::DDPF_RGB | dx::DDPF_ALPHAPIXELS | dx::DDPF_ALPHA | dx::DDPF_YUV | dx::DDPF_LUMINANCE)) && Format == static_cast<format>(gli::FORMAT_INVALID) && Header.Format.bpp > 0 && Header.Format.bpp < 64)
+		gli::format Format(gli::FORMAT_UNDEFINED);
+		if((Header.Format.flags & (dx::DDPF_RGB | dx::DDPF_ALPHAPIXELS | dx::DDPF_ALPHA | dx::DDPF_YUV | dx::DDPF_LUMINANCE)) && Format == gli::FORMAT_UNDEFINED && Header.Format.bpp > 0 && Header.Format.bpp < 64)
 		{
 			switch(Header.Format.bpp)
 			{
@@ -266,7 +266,7 @@ namespace detail
 				}
 			}
 		}
-		else if((Header.Format.flags & dx::DDPF_FOURCC) && (Header.Format.fourCC != dx::D3DFMT_DX10) && (Header.Format.fourCC != dx::D3DFMT_GLI1) && (Format == static_cast<format>(gli::FORMAT_INVALID)))
+		else if((Header.Format.flags & dx::DDPF_FOURCC) && (Header.Format.fourCC != dx::D3DFMT_DX10) && (Header.Format.fourCC != dx::D3DFMT_GLI1) && (Format == gli::FORMAT_UNDEFINED))
 		{
 			dx::d3dfmt const FourCC = detail::remap_four_cc(Header.Format.fourCC);
 			Format = DX.find(FourCC);
@@ -274,7 +274,7 @@ namespace detail
 		else if(Header.Format.fourCC == dx::D3DFMT_DX10 || Header.Format.fourCC == dx::D3DFMT_GLI1)
 			Format = DX.find(Header.Format.fourCC, Header10.Format);
 
-		GLI_ASSERT(Format != static_cast<format>(gli::FORMAT_INVALID));
+		GLI_ASSERT(Format != gli::FORMAT_UNDEFINED);
 
 		size_t const MipMapCount = (Header.Flags & detail::DDSD_MIPMAPCOUNT) ? Header.MipMapLevels : 1;
 		size_t FaceCount = 1;

@@ -8,7 +8,7 @@ namespace valid
 
 		for(std::size_t FormatIndex = gli::FORMAT_FIRST; FormatIndex < gli::FORMAT_COUNT; ++FormatIndex)
 			Error += gli::is_valid(static_cast<gli::format>(FormatIndex)) ? 0 : 1;
-		Error += !gli::is_valid(static_cast<gli::format>(gli::FORMAT_INVALID)) ? 0 : 1;
+		Error += !gli::is_valid(gli::FORMAT_UNDEFINED) ? 0 : 1;
 
 		return Error;
 	}
